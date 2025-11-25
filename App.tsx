@@ -7,15 +7,19 @@ import Portfolio from './components/Portfolio';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { HIcon } from './components/icons';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-brand-dark text-brand-light font-sans antialiased">
+    <div className="bg-brand-dark text-brand-light font-sans antialiased overflow-x-hidden">
       <Header />
-      <main>
+      <main className="relative">
         <Hero />
-        <Services />
-        <Portfolio />
+        <div className="relative">
+          <HIcon className="absolute top-64 left-1/2 -translate-x-1/2 text-brand-orange opacity-5 w-[900px] h-[900px] -rotate-[36deg] transform-gpu pointer-events-none" />
+          <Services />
+          <Portfolio />
+        </div>
         <Testimonials />
         <Contact />
       </main>

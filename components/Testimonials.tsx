@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { HIcon } from './icons';
 
@@ -22,19 +21,19 @@ const Testimonials: React.FC = () => {
             quote: "O trabalho de branding superou todas as nossas expectativas. A nova identidade visual realmente capturou a essência da nossa empresa.",
             name: "Ana Silva",
             company: "CEO, InovaTech",
-            imageUrl: "https://picsum.photos/seed/person1/100/100"
+            imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
         },
         {
             quote: "A landing page que desenvolveram para nós aumentou nossa conversão em 40%. Profissionalismo e foco em resultado do início ao fim.",
             name: "Carlos Pereira",
             company: "Diretor de Marketing, VendeMais",
-            imageUrl: "https://picsum.photos/seed/person2/100/100"
+            imageUrl: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
         },
         {
             quote: "A gestão das nossas redes sociais está incrível. As artes são criativas e o engajamento do nosso público nunca foi tão alto.",
             name: "Juliana Costa",
             company: "Fundadora, Moda & Estilo",
-            imageUrl: "https://picsum.photos/seed/person3/100/100"
+            imageUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=461&q=80"
         },
     ];
 

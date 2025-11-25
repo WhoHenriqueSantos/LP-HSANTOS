@@ -1,5 +1,5 @@
 import React from 'react';
-import { HsantosFullLogo } from './icons';
+import { HsantosFullLogo, InstagramIcon, MailIcon, WhatsappIcon } from './icons';
 
 const Header: React.FC = () => {
     const scrollToContact = () => {
@@ -16,7 +16,18 @@ const Header: React.FC = () => {
                        <p className="text-brand-gray text-sm leading-tight">Web & Graphic</p>
                    </div>
                 </a>
-                <nav>
+                <nav className="flex items-center gap-6">
+                    <div className="hidden md:flex items-center gap-5">
+                        <a href="https://www.instagram.com/hsantosdes" target="_blank" rel="noopener noreferrer" aria-label="Instagram de HSANTOS DESIGN" className="text-brand-gray hover:text-brand-orange transition-colors duration-300">
+                            <InstagramIcon className="w-6 h-6" />
+                        </a>
+                        <a href="https://wa.me/5511997991151" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp de HSANTOS DESIGN" className="text-brand-gray hover:text-brand-orange transition-colors duration-300">
+                            <WhatsappIcon className="w-6 h-6" />
+                        </a>
+                        <a href="mailto:contato@hsantosdesign.com.br" aria-label="Email de HSANTOS DESIGN" className="text-brand-gray hover:text-brand-orange transition-colors duration-300">
+                            <MailIcon className="w-6 h-6" />
+                        </a>
+                    </div>
                     <button 
                         onClick={scrollToContact}
                         className="bg-brand-orange text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105"
