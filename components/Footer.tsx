@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
                         <a href="https://wa.me/5511997991151" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp de HSANTOS DESIGN" className="text-brand-gray hover:text-brand-orange transition-colors duration-300">
                             <WhatsappIcon className="w-6 h-6" />
                         </a>
-                        <a href="mailto:hsantostedes@gmail.com" aria-label="Email de HSANTOS DESIGN" className="text-brand-gray hover:text-brand-orange transition-colors duration-300">
+                        <a href="mailto:contato@hsantosdesign.com.br" aria-label="Email de HSANTOS DESIGN" className="text-brand-gray hover:text-brand-orange transition-colors duration-300">
                             <MailIcon className="w-6 h-6" />
                         </a>
                     </div>
