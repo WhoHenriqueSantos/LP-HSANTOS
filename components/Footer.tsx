@@ -1,5 +1,6 @@
 import React from 'react';
 import { InstagramIcon, WhatsappIcon, MailIcon } from './icons';
+import logo from '../logo.png';
 
 const Footer: React.FC = () => {
     return (
@@ -7,7 +8,7 @@ const Footer: React.FC = () => {
             <div className="container mx-auto px-6 py-8">
                 <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
                     <a href="#hero" aria-label="HSANTOS DESIGN Logo" className="flex items-center gap-3">
-                        <img src="/logo.png" alt="HSANTOS DESIGN Logo" className="h-10 w-auto" />
+                        <img src={logo} alt="HSANTOS DESIGN Logo" className="h-10 w-auto" />
                         <div className="hidden sm:block border-l-2 border-gray-700 pl-3">
                            <p className="text-white font-semibold leading-tight tracking-wide text-sm">DESIGN</p>
                            <p className="text-brand-gray text-xs leading-tight">Web & Graphic</p>
