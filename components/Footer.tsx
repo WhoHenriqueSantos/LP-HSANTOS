@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../logo.png';
+import logo from '/logo.png';
 import { InstagramIcon, WhatsappIcon, MailIcon } from './icons';
 
 const Footer: React.FC = () => {
