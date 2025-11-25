@@ -26,7 +26,7 @@ const Portfolio: React.FC = () => {
         <section id="portfolio" className="py-20 bg-gray-900/50">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-extrabold text-white">Nosso Portfólio</h2>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white">Nosso Portfólio</h2>
                     <p className="text-lg text-brand-gray mt-2 max-w-2xl mx-auto">Confira alguns dos projetos que tivemos o prazer de criar.</p>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

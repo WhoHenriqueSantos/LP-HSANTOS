@@ -1,4 +1,3 @@
-
 import React, { useState, FormEvent } from 'react';
 import { MailIcon, WhatsappIcon } from './icons';
 
@@ -45,10 +44,10 @@ const Contact: React.FC = () => {
         <section id="contact" className="py-20 bg-gray-900/50">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-extrabold text-white">Vamos começar seu projeto?</h2>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white">Vamos começar seu projeto?</h2>
                     <p className="text-lg text-brand-gray mt-2 max-w-2xl mx-auto">Envie sua mensagem ou entre em contato por um dos nossos canais. Estamos prontos para ajudar.</p>
                 </div>
-                <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-12 bg-gray-800/50 p-8 md:p-12 rounded-xl border border-gray-700/50">
+                <div className="max-w-4xl mx-auto grid lg:grid-cols-2 gap-8 lg:gap-12 bg-gray-800/50 p-6 sm:p-8 md:p-12 rounded-xl border border-gray-700/50">
                     <div className="flex flex-col justify-center">
                         <h3 className="text-2xl font-bold text-white mb-6">Informações de Contato</h3>
                         <p className="text-brand-gray mb-8">Prefere um contato mais direto? Nos chame no WhatsApp ou envie um e-mail.</p>
@@ -85,7 +84,7 @@ const Contact: React.FC = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium text-brand-gray mb-2">Mensagem</label>
-                                    <textarea id="message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} required rows={5} className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange"></textarea>
+                                    <textarea id="message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} required rows={4} className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-brand-orange"></textarea>
                                 </div>
                                 <button type="submit" disabled={isSubmitting} className="w-full bg-brand-orange text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed">
                                     {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}

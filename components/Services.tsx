@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CheckIcon } from './icons';
 
@@ -41,7 +40,7 @@ const Services: React.FC = () => {
         <section id="services" className="py-20 bg-brand-dark">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h2 className="text-4xl font-extrabold text-white">Nossas Soluções</h2>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white">Nossas Soluções</h2>
                     <p className="text-lg text-brand-gray mt-2 max-w-2xl mx-auto">Tudo que você precisa para construir uma marca forte e uma presença online de impacto.</p>
                 </div>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

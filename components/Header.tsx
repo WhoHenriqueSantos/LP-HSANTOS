@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HsantosFullLogo, InstagramIcon, MailIcon, WhatsappIcon } from './icons';
 
@@ -10,7 +11,7 @@ const Header: React.FC = () => {
         <header className="sticky top-0 bg-brand-dark/80 backdrop-blur-sm z-50 py-4">
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <a href="#hero" aria-label="HSANTOS DESIGN Logo" className="flex items-center gap-3">
-                   <HsantosFullLogo className="h-12 w-auto" />
+                   <HsantosFullLogo className="h-10 sm:h-12 w-auto" />
                    <div className="hidden sm:block border-l-2 border-brand-gray pl-3">
                        <p className="text-white font-semibold leading-tight tracking-wide">DESIGN</p>
                        <p className="text-brand-gray text-sm leading-tight">Web & Graphic</p>
