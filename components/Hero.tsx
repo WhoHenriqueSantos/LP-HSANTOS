@@ -7,23 +7,25 @@ const Hero: React.FC = () => {
     };
 
     return (
-        <section id="hero" className="relative py-20 md:py-32 bg-brand-dark">
-            <div className="absolute inset-0 bg-grid-gray-700/20 [mask-image:linear-gradient(to_bottom,white_20%,transparent_100%)]"></div>
-            <div className="container mx-auto px-6 text-center relative z-10">
-                <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
-                    Design não é só <span className="text-brand-orange">aparência</span>.
+        <section id="hero" className="relative h-screen flex items-center justify-center bg-brand-dark overflow-hidden">
+            <div className="absolute inset-0 bg-grid-gray-700/10 [mask-image:linear-gradient(to_bottom,white_20%,transparent_100%)]"></div>
+            <div className="container mx-auto px-6 text-center relative z-10 -mt-4 md:-mt-6">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 tracking-tight">
+                    Design não é <span className="text-brand-orange">aparência</span>
                     <br />
-                    É estratégia e posicionamento.
+                    É posicionamento
                 </h1>
-                <p className="text-lg md:text-xl text-brand-gray max-w-3xl mx-auto mb-8">
-                    Criamos identidades visuais marcantes e sites modernos que transformam visitantes em clientes. Dê o próximo passo para o sucesso da sua marca.
+                <p className="text-base md:text-lg text-brand-gray max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Design, estratégia e performance para marcas que querem ir além
                 </p>
-                <button 
-                    onClick={scrollToContact}
-                    className="bg-brand-orange text-white font-bold py-4 px-10 rounded-lg shadow-xl hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 text-lg"
-                >
-                    Solicite um Orçamento
-                </button>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button 
+                        onClick={scrollToContact}
+                        className="w-full sm:w-auto bg-brand-orange text-white font-semibold py-3.5 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-[1.02] text-base"
+                    >
+                        Solicite um Orçamento
+                    </button>
+                </div>
             </div>
         </section>
     );

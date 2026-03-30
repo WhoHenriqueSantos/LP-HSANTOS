@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className="sticky top-0 bg-brand-dark/80 backdrop-blur-sm z-50 py-4">
+        <header className="absolute top-0 left-0 w-full bg-transparent z-50 py-6">
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <a href="#hero" aria-label="HSANTOS DESIGN Logo" className="flex items-center gap-3">
                    <HsantosFullLogo className="h-10 sm:h-12 w-auto" />
