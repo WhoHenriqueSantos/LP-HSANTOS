@@ -9,7 +9,7 @@ const PortfolioBlock: React.FC<{
 }> = ({ category, title, imageUrl, onClick }) => (
     <button 
         onClick={onClick}
-        className="group relative overflow-hidden rounded-2xl shadow-2xl aspect-[4/5] w-full text-left transition-all duration-500 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-brand-orange"
+        className="group relative overflow-hidden rounded-2xl shadow-2xl aspect-[3/4] w-full text-left transition-all duration-500 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-brand-orange"
     >
         {/* Background Image */}
         <img 
@@ -21,13 +21,13 @@ const PortfolioBlock: React.FC<{
         {/* Overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent"></div>
         <div className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-
+ 
         {/* Content */}
-        <div className="absolute bottom-0 left-0 p-8 z-10 w-full">
-            <span className="text-brand-orange font-bold uppercase tracking-[0.2em] text-xs mb-3 block transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+        <div className="absolute bottom-0 left-0 p-6 z-10 w-full">
+            <span className="text-brand-orange font-bold uppercase tracking-[0.2em] text-[10px] mb-2 block transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 {category}
             </span>
-            <h3 className="text-2xl md:text-3xl font-extrabold text-white leading-tight mb-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+            <h3 className="text-xl md:text-2xl font-extrabold text-white leading-tight mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                 {title}
             </h3>
             
@@ -51,16 +51,16 @@ const Portfolio: React.FC = () => {
     return (
         <section id="portfolio" className="py-24 bg-brand-dark">
             <div className="container mx-auto px-6">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                    <div className="max-w-2xl">
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">Nossos Resultados</h2>
-                        <p className="text-xl text-brand-gray leading-relaxed">
+                <div className="max-w-6xl mx-auto mb-12">
+                    <div className="max-w-xl">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Nossos Resultados</h2>
+                        <p className="text-lg text-brand-gray leading-relaxed">
                             Transformamos visões em realidade através de design estratégico. Descubra como elevamos o posicionamento de nossos clientes.
                         </p>
                     </div>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-14 mx-auto max-w-6xl">
                     <PortfolioBlock 
                         category="Web Design"
                         title="Interfaces que Convertem"
