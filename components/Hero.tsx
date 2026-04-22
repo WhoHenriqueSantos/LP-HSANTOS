@@ -8,8 +8,10 @@ const Hero: React.FC = () => {
 
     return (
         <section id="hero" className="relative h-screen flex items-center justify-center bg-brand-dark overflow-hidden">
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2648&auto=format&fit=crop')] bg-cover bg-center opacity-10 grayscale"></div>
             <div className="absolute inset-0 bg-grid-gray-700/10 [mask-image:linear-gradient(to_bottom,white_20%,transparent_100%)]"></div>
-            <div className="container mx-auto px-6 text-center relative z-10 -mt-4 md:-mt-6">
+            <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-brand-dark to-transparent z-10 pointer-events-none"></div>
+            <div className="container mx-auto px-6 text-center relative z-20 -mt-4 md:-mt-6">
                 <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 tracking-tight">
                     Design não é <span className="text-brand-orange">aparência</span>
                     <br />
