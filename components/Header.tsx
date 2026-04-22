@@ -1,7 +1,27 @@
 
 import React, { useState, useEffect } from 'react';
 import { HsantosFullLogo, InstagramIcon, MailIcon, WhatsappIcon } from './icons';
-import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+
+const HamburgerIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
+    <div className="w-8 h-8 relative flex flex-col justify-center items-center">
+        <motion.span
+            animate={isOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -8 }}
+            className="w-full h-1 bg-white rounded-full absolute transition-colors"
+            transition={{ duration: 0.3 }}
+        />
+        <motion.span
+            animate={isOpen ? { opacity: 0, x: -20 } : { opacity: 1, x: 0 }}
+            className="w-full h-1 bg-white rounded-full absolute transition-colors"
+            transition={{ duration: 0.3 }}
+        />
+        <motion.span
+            animate={isOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 8 }}
+            className="w-full h-1 bg-white rounded-full absolute transition-colors"
+            transition={{ duration: 0.3 }}
+        />
+    </div>
+);
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -123,47 +143,56 @@ const Header: React.FC = () => {
                     
                     {/* Mobile Menu Button */}
                     <button 
-                        className="lg:hidden text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
+                        className="lg:hidden text-white p-2 hover:bg-white/5 rounded-lg transition-colors relative w-12 h-12 flex items-center justify-center z-[70]"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
                     >
-                        {isMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+                        <HamburgerIcon isOpen={isMenuOpen} />
                     </button>
                 </div>
             </div>
 
             {/* Mobile Navigation */}
-            {isMenuOpen && (
-                <div className="lg:hidden absolute top-full left-0 w-full bg-brand-dark/98 backdrop-blur-xl border-t border-gray-800 shadow-2xl py-8 px-6 flex flex-col gap-5 animate-in slide-in-from-top duration-300">
-                    {navLinks.map((link) => (
-                        <button
-                            key={link.id}
-                            onClick={() => scrollToSection(link.id)}
-                            className={`font-semibold text-left text-xl py-3 border-b border-gray-800/50 transition-colors ${
-                                activeSection === link.id ? 'text-brand-orange' : 'text-white hover:text-brand-orange'
-                            }`}
-                        >
-                            {link.name}
-                        </button>
-                    ))}
-                    <div className="flex items-center gap-8 mt-6 justify-center">
-                        <a href="https://www.instagram.com/hsantosdes" target="_blank" rel="noopener noreferrer" className="text-brand-gray hover:text-brand-orange scale-125">
-                            <InstagramIcon className="w-7 h-7" />
-                        </a>
-                        <a href="https://wa.me/5511997991151" target="_blank" rel="noopener noreferrer" className="text-brand-gray hover:text-brand-orange scale-125">
-                            <WhatsappIcon className="w-7 h-7" />
-                        </a>
-                        <a href="mailto:contato@hsantosdesign.com.br" className="text-brand-gray hover:text-brand-orange scale-125">
-                            <MailIcon className="w-7 h-7" />
-                        </a>
-                    </div>
-                    <button 
-                        onClick={() => scrollToSection('contact')}
-                        className="bg-brand-orange text-white font-bold py-4 px-6 rounded-xl shadow-lg mt-4 text-lg active:scale-95 transition-transform"
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                        className="lg:hidden absolute top-full left-0 w-full bg-brand-dark border-t border-gray-800 shadow-2xl py-10 px-8 flex flex-col gap-6 z-[60]"
                     >
-                        Fale Conosco
-                    </button>
-                </div>
-            )}
+                        {navLinks.map((link) => (
+                            <button
+                                key={link.id}
+                                onClick={() => scrollToSection(link.id)}
+                                className={`font-semibold text-left text-2xl py-4 border-b border-gray-800/50 transition-colors ${
+                                    activeSection === link.id ? 'text-brand-orange' : 'text-white hover:text-brand-orange'
+                                }`}
+                            >
+                                {link.name}
+                            </button>
+                        ))}
+                        <div className="flex items-center gap-10 mt-8 justify-center">
+                            <a href="https://www.instagram.com/hsantosdes" target="_blank" rel="noopener noreferrer" className="text-brand-gray hover:text-brand-orange transform scale-150 transition-transform">
+                                <InstagramIcon className="w-8 h-8" />
+                            </a>
+                            <a href="https://wa.me/5511997991151" target="_blank" rel="noopener noreferrer" className="text-brand-gray hover:text-brand-orange transform scale-150 transition-transform">
+                                <WhatsappIcon className="w-8 h-8" />
+                            </a>
+                            <a href="mailto:contato@hsantosdesign.com.br" className="text-brand-gray hover:text-brand-orange transform scale-150 transition-transform">
+                                <MailIcon className="w-8 h-8" />
+                            </a>
+                        </div>
+                        <button 
+                            onClick={() => scrollToSection('contact')}
+                            className="bg-brand-orange text-white font-bold py-5 px-6 rounded-2xl shadow-xl mt-6 text-xl active:scale-95 transition-transform"
+                        >
+                            Fale Conosco
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 };
