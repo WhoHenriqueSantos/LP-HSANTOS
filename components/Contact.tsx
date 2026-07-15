@@ -5,11 +5,30 @@ const Contact: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [emailError, setEmailError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const validateEmail = (emailStr: string): boolean => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(emailStr.trim());
+    };
+
+    const handleEmailChange = (val: string) => {
+        setEmail(val);
+        if (emailError) {
+            setEmailError('');
+        }
+    };
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        
+        if (!validateEmail(email)) {
+            setEmailError('Por favor, insira um e-mail válido (exemplo: nome@dominio.com).');
+            return;
+        }
+
         setIsSubmitting(true);
         const form = e.target as HTMLFormElement;
         const data = new FormData(form);
@@ -75,16 +94,34 @@ const Contact: React.FC = () => {
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                                 <div>
-                                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-brand-gray mb-1 sm:mb-2">Nome</label>
-                                    <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} required className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-white focus:outline-none focus:ring-2 focus:ring-brand-orange" />
+                                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-brand-gray mb-1 sm:mb-2">
+                                        Nome <span className="text-brand-orange">*</span>
+                                    </label>
+                                    <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} required placeholder="Digite seu nome completo" className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-orange" />
                                 </div>
                                 <div>
-                                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-brand-gray mb-1 sm:mb-2">E-mail</label>
-                                    <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-white focus:outline-none focus:ring-2 focus:ring-brand-orange" />
+                                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-brand-gray mb-1 sm:mb-2">
+                                        E-mail <span className="text-brand-orange">*</span>
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        value={email} 
+                                        onChange={(e) => handleEmailChange(e.target.value)} 
+                                        required 
+                                        placeholder="contato@exemplo.com.br" 
+                                        className={`w-full bg-gray-900 border ${emailError ? 'border-brand-orange focus:ring-brand-orange' : 'border-gray-700 focus:ring-brand-orange'} rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2`} 
+                                    />
+                                    {emailError && (
+                                        <p className="text-brand-orange text-xs mt-1.5 font-medium flex items-center gap-1">
+                                            <span>⚠️</span> {emailError}
+                                        </p>
+                                    )}
                                 </div>
                                 <div>
                                     <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-brand-gray mb-1 sm:mb-2">Mensagem</label>
-                                    <textarea id="message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} required rows={4} className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-white focus:outline-none focus:ring-2 focus:ring-brand-orange"></textarea>
+                                    <textarea id="message" name="message" value={message} onChange={(e) => setMessage(e.target.value)} required rows={4} placeholder="Como podemos te ajudar? Descreva brevemente o seu projeto..." className="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-orange"></textarea>
                                 </div>
                                 <button type="submit" disabled={isSubmitting} className="w-full bg-brand-orange text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base">
                                     {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}

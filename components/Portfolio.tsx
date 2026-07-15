@@ -39,10 +39,16 @@ const PortfolioBlock: React.FC<{
     </button>
 );
 
-const Portfolio: React.FC = () => {
+interface PortfolioProps {
+    onViewWebDesign?: () => void;
+}
+
+const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign }) => {
     const handleNavigation = (category: string) => {
         if (category === "WhatsApp") {
             window.open("https://wa.me/5511997991151", "_blank");
+        } else if (category === "Web Design" && onViewWebDesign) {
+            onViewWebDesign();
         } else {
             document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }
@@ -85,10 +91,10 @@ const Portfolio: React.FC = () => {
                     <p className="text-brand-orange mb-4 text-xs font-bold tracking-[0.3em] uppercase">Pronto para o próximo nível?</p>
                     <button 
                         onClick={() => handleNavigation("WhatsApp")}
-                        className="text-white font-extrabold text-xl md:text-3xl hover:text-brand-orange transition-all group flex flex-col md:flex-row items-center justify-center gap-6 mx-auto"
+                        className="text-white font-extrabold text-xl md:text-3xl hover:text-brand-orange transition-all group flex flex-col md:flex-row items-center justify-center gap-6 mx-auto translate-x-4 md:translate-x-6"
                     >
                         <span className="border-b-4 border-brand-orange pb-2 group-hover:border-white transition-colors leading-tight">
-                            Chamar atendimento exclusivo via WhatsApp
+                            Atendimento via WhatsApp
                         </span>
                         <span className="hidden md:inline-block text-brand-orange group-hover:translate-x-3 transition-transform duration-300">→</span>
                     </button>

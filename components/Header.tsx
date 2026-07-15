@@ -23,12 +23,22 @@ const HamburgerIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
     </div>
 );
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    currentView?: 'home' | 'webdesign';
+    onViewChange?: (view: 'home' | 'webdesign') => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
 
     useEffect(() => {
+        if (currentView === 'webdesign') {
+            setActiveSection('portfolio');
+            return;
+        }
+
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
 
@@ -52,10 +62,34 @@ const Header: React.FC = () => {
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [currentView]);
 
     const scrollToSection = (id: string) => {
         setIsMenuOpen(false);
+
+        if (currentView === 'webdesign') {
+            if (onViewChange) {
+                onViewChange('home');
+                setTimeout(() => {
+                    if (id === 'hero') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    const element = document.getElementById(id);
+                    if (element) {
+                        const headerHeight = 90;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - headerHeight;
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 100);
+            }
+            return;
+        }
+
         if (id === 'hero') {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
@@ -65,7 +99,7 @@ const Header: React.FC = () => {
         if (element) {
             const headerHeight = 90; // Approximate height of fixed header
             const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+            const offsetPosition = elementPosition + window.scrollY - headerHeight;
 
             window.scrollTo({
                 top: offsetPosition,

@@ -1,12 +1,29 @@
 import React from 'react';
 import { InstagramIcon, WhatsappIcon, MailIcon, HsantosFullLogo } from './icons';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+    onViewChange?: (view: 'home' | 'webdesign') => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
     return (
         <footer className="bg-black/50">
             <div className="container mx-auto px-6 py-8">
                 <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-                    <a href="#hero" aria-label="HSANTOS DESIGN Logo" className="flex items-center gap-3">
+                    <a 
+                        href="#hero" 
+                        onClick={(e) => {
+                            if (onViewChange) {
+                                e.preventDefault();
+                                onViewChange('home');
+                                setTimeout(() => {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                }, 100);
+                            }
+                        }}
+                        aria-label="HSANTOS DESIGN Logo" 
+                        className="flex items-center gap-3 transition-transform hover:scale-105"
+                    >
                         <HsantosFullLogo className="h-10 w-auto" />
                         <div className="hidden sm:block border-l-2 border-gray-700 pl-3">
                            <p className="text-white font-semibold leading-tight tracking-wide text-sm">DESIGN</p>
