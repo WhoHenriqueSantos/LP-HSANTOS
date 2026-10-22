@@ -2,8 +2,17 @@
 import React from 'react';
 
 const Hero: React.FC = () => {
-    const scrollToContact = () => {
-        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            const headerHeight = 90;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerHeight;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
     };
 
     return (
@@ -22,10 +31,16 @@ const Hero: React.FC = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button 
-                        onClick={scrollToContact}
-                        className="w-full sm:w-auto bg-brand-orange text-white font-semibold py-3.5 px-8 rounded-lg shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-[1.02] text-base"
+                        onClick={() => scrollToSection('contact')}
+                        className="w-full sm:w-auto bg-brand-orange text-white font-semibold py-3.5 px-8 rounded-xl shadow-lg hover:bg-opacity-90 transition-all duration-300 transform hover:scale-[1.02] text-base"
                     >
                         Solicite um Orçamento
+                    </button>
+                    <button 
+                        onClick={() => scrollToSection('portfolio')}
+                        className="w-full sm:w-auto flex items-center justify-center bg-gray-900/60 text-white font-semibold py-3.5 px-8 rounded-xl border border-gray-700/70 hover:border-white shadow-sm transition-colors duration-300 text-base backdrop-blur-sm"
+                    >
+                        Ver Projetos
                     </button>
                 </div>
             </div>
@@ -34,3 +49,4 @@ const Hero: React.FC = () => {
 };
 
 export default Hero;
+

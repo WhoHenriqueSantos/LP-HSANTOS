@@ -111,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) =
     const navLinks = [
         { name: 'Home', id: 'hero' },
         { name: 'Soluções', id: 'services' },
-        { name: 'Portifólio', id: 'portfolio' },
+        { name: 'Portfólio', id: 'portfolio' },
         { name: 'Feedback', id: 'testimonials' },
         { name: 'Contato', id: 'contact' },
     ];

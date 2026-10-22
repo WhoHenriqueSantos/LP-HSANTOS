@@ -59,9 +59,9 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign }) => {
             <div className="container mx-auto px-6">
                 <div className="max-w-6xl mx-auto mb-12">
                     <div className="max-w-xl">
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Nossos Resultados</h2>
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Conheça nossos Projetos</h2>
                         <p className="text-lg text-brand-gray leading-relaxed">
-                            Transformamos visões em realidade através de design estratégico. Descubra como elevamos o posicionamento de nossos clientes.
+                            Transformamos ideias em realidade através do design. Descubra como elevamos o posicionamento de alguns clientes.
                         </p>
                     </div>
                 </div>
