@@ -44,6 +44,14 @@ export const HsantosSquareLogo: React.FC<IconProps> = ({ className }) => (
     <HsantosFullLogo className={className} withBackground={true} />
 );
 
+export const HsantosLogoImg: React.FC<IconProps & { alt?: string }> = ({ className, alt = "HSANTOS DESIGN" }) => (
+    <img src="/logo/logo.svg" alt={alt} className={className} />
+);
+
+export const HsantosIconImg: React.FC<IconProps & { alt?: string }> = ({ className, alt = "HSANTOS" }) => (
+    <img src="/logo/logoicone.png" alt={alt} className={className} />
+);
+
 export const InstagramIcon: React.FC<IconProps> = ({ className }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>

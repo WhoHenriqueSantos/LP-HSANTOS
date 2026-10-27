@@ -8,12 +8,13 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WebDesignVitrine from './components/WebDesignVitrine';
+import BrandingVitrine from './components/BrandingVitrine';
 import { HIcon } from './components/icons';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'webdesign'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'webdesign' | 'branding'>('home');
 
-  const handleSetView = (view: 'home' | 'webdesign') => {
+  const handleSetView = (view: 'home' | 'webdesign' | 'branding') => {
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -22,20 +23,31 @@ const App: React.FC = () => {
     <div className="bg-brand-dark text-brand-light font-sans antialiased min-h-screen flex flex-col">
       <Header currentView={currentView} onViewChange={handleSetView} />
       
-      {currentView === 'home' ? (
+      {currentView === 'home' && (
         <main className="relative overflow-x-hidden flex-grow">
           <Hero />
           <div className="relative">
             <HIcon className="absolute top-64 left-1/2 -translate-x-1/2 text-brand-orange opacity-5 w-[900px] h-[900px] -rotate-[36deg] transform-gpu pointer-events-none" />
             <Services />
-            <Portfolio onViewWebDesign={() => handleSetView('webdesign')} />
+            <Portfolio 
+              onViewWebDesign={() => handleSetView('webdesign')} 
+              onViewBranding={() => handleSetView('branding')}
+            />
           </div>
           <Testimonials />
           <Contact />
         </main>
-      ) : (
+      )}
+
+      {currentView === 'webdesign' && (
         <main className="flex-grow">
           <WebDesignVitrine onBack={() => handleSetView('home')} />
+        </main>
+      )}
+
+      {currentView === 'branding' && (
+        <main className="flex-grow">
+          <BrandingVitrine onBack={() => handleSetView('home')} />
         </main>
       )}
       

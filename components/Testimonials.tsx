@@ -3,7 +3,7 @@ import { HIcon } from './icons';
 
 const TestimonialCard: React.FC<{ quote: string; name: string; company: string; imageUrl: string }> = ({ quote, name, company, imageUrl }) => (
     <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700/50 flex flex-col items-start h-full">
-        <HIcon className="w-8 h-8 text-brand-orange mb-4" />
+        <img src="/logo/logoicone.png" alt="HSANTOS" className="w-8 h-8 object-contain mb-4" />
         <p className="text-brand-light flex-grow mb-6">"{quote}"</p>
         <div className="flex items-center mt-auto">
             <img src={imageUrl} alt={name} className="w-12 h-12 rounded-full object-cover mr-4" />

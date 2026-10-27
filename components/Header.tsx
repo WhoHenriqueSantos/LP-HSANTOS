@@ -24,8 +24,8 @@ const HamburgerIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
 );
 
 interface HeaderProps {
-    currentView?: 'home' | 'webdesign';
-    onViewChange?: (view: 'home' | 'webdesign') => void;
+    currentView?: 'home' | 'webdesign' | 'branding';
+    onViewChange?: (view: 'home' | 'webdesign' | 'branding') => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) => {
@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) =
     const [activeSection, setActiveSection] = useState('hero');
 
     useEffect(() => {
-        if (currentView === 'webdesign') {
+        if (currentView !== 'home') {
             setActiveSection('portfolio');
             return;
         }
@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) =
     const scrollToSection = (id: string) => {
         setIsMenuOpen(false);
 
-        if (currentView === 'webdesign') {
+        if (currentView !== 'home') {
             if (onViewChange) {
                 onViewChange('home');
                 setTimeout(() => {

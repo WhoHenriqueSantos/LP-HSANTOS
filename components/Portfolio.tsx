@@ -41,14 +41,17 @@ const PortfolioBlock: React.FC<{
 
 interface PortfolioProps {
     onViewWebDesign?: () => void;
+    onViewBranding?: () => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign }) => {
+const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign, onViewBranding }) => {
     const handleNavigation = (category: string) => {
         if (category === "WhatsApp") {
             window.open("https://wa.me/5511997991151", "_blank");
         } else if (category === "Web Design" && onViewWebDesign) {
             onViewWebDesign();
+        } else if (category === "Branding" && onViewBranding) {
+            onViewBranding();
         } else {
             document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }
@@ -70,19 +73,19 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign }) => {
                     <PortfolioBlock 
                         category="Web Design"
                         title="Interfaces que Convertem"
-                        imageUrl="https://images.unsplash.com/photo-1542744095-291d1f67b221?auto=format&fit=crop&w=800&q=80"
+                        imageUrl="/cards/webdesign.jpg"
                         onClick={() => handleNavigation("Web Design")}
                     />
                     <PortfolioBlock 
                         category="Branding"
                         title="Identidades que Marcam"
-                        imageUrl="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=800&q=80"
+                        imageUrl="/cards/branding.jpg"
                         onClick={() => handleNavigation("Branding")}
                     />
                     <PortfolioBlock 
                         category="Social Media"
                         title="Conteúdo que Engaja"
-                        imageUrl="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80"
+                        imageUrl="/cards/socialmedia.jpg"
                         onClick={() => handleNavigation("Social Media")}
                     />
                 </div>
