@@ -108,7 +108,6 @@ const categories = ["Todas", "Moda"];
 const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
     const [selectedCategory, setSelectedCategory] = useState("Todas");
     const [selectedProject, setSelectedProject] = useState<BrandingProject | null>(null);
-    const [mobileTab, setMobileTab] = useState<'slides' | 'info'>('slides');
 
     const filteredProjects = selectedCategory === "Todas"
         ? brandingProjects
@@ -116,7 +115,6 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
 
     const handleOpenProject = (project: BrandingProject) => {
         if (project.isPlaceholder) return;
-        setMobileTab('slides');
         setSelectedProject(project);
     };
 
@@ -419,61 +417,34 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                             `}</style>
 
                             {/* Top Bar: Brand Dark Blue #1e2a38 spanning the full modal header */}
-                            <div className="bg-[#1e2a38] px-3.5 sm:px-7 py-3 sm:py-4 border-b border-white/10 flex items-center justify-between shrink-0 z-20 w-full gap-2">
-                                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                                    <span className="text-xs sm:text-sm font-semibold tracking-wide text-white/90">
-                                        Brandkit Completo
-                                    </span>
+                            <div className="bg-[#1e2a38] px-4 sm:px-7 py-3 sm:py-4 border-b border-white/10 flex items-center justify-between shrink-0 z-20 w-full gap-2">
+                                <span className="text-xs sm:text-sm font-semibold tracking-wide text-white/90 whitespace-nowrap">
+                                    Brandkit Completo
+                                </span>
+
+                                <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
                                     {selectedProject.category && (
                                         <span className="px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-brand-orange/20 text-brand-orange border border-brand-orange/30">
                                             {selectedProject.category}
                                         </span>
                                     )}
-                                </div>
 
-                                {/* Mobile Tab Switcher (Only visible on mobile screens < lg) */}
-                                <div className="flex lg:hidden items-center bg-black/40 p-0.5 rounded-lg border border-white/10 shrink-0">
-                                    <button
-                                        type="button"
-                                        onClick={() => setMobileTab('slides')}
-                                        className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${
-                                            mobileTab === 'slides'
-                                                ? 'bg-brand-orange text-white shadow-sm'
-                                                : 'text-gray-300 hover:text-white'
-                                        }`}
+                                    {/* Close button */}
+                                    <button 
+                                        onClick={() => setSelectedProject(null)}
+                                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white flex items-center justify-center transition-all border border-white/10 shrink-0"
+                                        aria-label="Fechar visualização"
                                     >
-                                        Lâminas (8)
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setMobileTab('info')}
-                                        className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${
-                                            mobileTab === 'info'
-                                                ? 'bg-brand-orange text-white shadow-sm'
-                                                : 'text-gray-300 hover:text-white'
-                                        }`}
-                                    >
-                                        Paleta & Info
+                                        <X className="w-4 h-4 sm:w-5 sm:h-5" />
                                     </button>
                                 </div>
-
-                                {/* Close button */}
-                                <button 
-                                    onClick={() => setSelectedProject(null)}
-                                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white flex items-center justify-center transition-all border border-white/10 shrink-0"
-                                    aria-label="Fechar visualização"
-                                >
-                                    <X className="w-4 h-4 sm:w-5 sm:h-5" />
-                                </button>
                             </div>
 
-                            {/* Modal Body: Split view on Desktop, Tab view on Mobile */}
+                            {/* Modal Body: Split view on Desktop, Fluid Continuous Scroll on Mobile */}
                             <div className="flex-1 w-full min-h-0 flex flex-col lg:flex-row overflow-hidden">
                                 {/* Slide Feed: Discreet scroll, NO padding, 70px separation strictly between slides */}
                                 <div 
-                                    className={`flex-1 h-full flex-col min-w-0 overflow-y-auto p-0 m-0 discreet-scroll ${
-                                        mobileTab === 'slides' ? 'flex' : 'hidden lg:flex'
-                                    }`}
+                                    className="flex-1 h-full flex flex-col min-w-0 overflow-y-auto p-0 m-0 discreet-scroll"
                                     style={{ backgroundColor: selectedProject.canvasBg || '#FCFBF7' }}
                                 >
                                     {selectedProject.slides.map((slide, sIdx) => (
@@ -490,24 +461,11 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                                         </div>
                                     ))}
 
-                                    {/* Mobile End-of-deck Action Card */}
-                                    <div className="lg:hidden p-5 sm:p-6 bg-[#16202c] border-t border-white/10 flex flex-col gap-3.5">
-                                        <div className="flex items-center justify-between">
-                                            <div>
-                                                <h4 className="text-white font-bold text-sm sm:text-base">{selectedProject.title}</h4>
-                                                <p className="text-brand-orange text-xs">{selectedProject.subtitle}</p>
-                                            </div>
-                                            <button
-                                                type="button"
-                                                onClick={() => setMobileTab('info')}
-                                                className="text-xs font-semibold text-gray-300 hover:text-brand-orange transition-colors underline underline-offset-2"
-                                            >
-                                                Ver Paleta Completa →
-                                            </button>
-                                        </div>
+                                    {/* Mobile End-of-deck Action Card: Pedir um Orçamento */}
+                                    <div className="lg:hidden p-4 sm:p-5 bg-[#16202c] border-t border-white/10">
                                         <button
                                             onClick={() => handleWhatsappInquiry(selectedProject)}
-                                            className="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
+                                            className="w-full bg-brand-orange hover:bg-orange-600 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
                                         >
                                             <WhatsappIcon className="w-4 h-4" />
                                             <span>Pedir um Orçamento</span>
@@ -515,10 +473,8 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                                     </div>
                                 </div>
 
-                                {/* Right Area: Sidebar for Info & Palette - Visible side-by-side on desktop, or toggled on mobile */}
-                                <div className={`w-full lg:w-[380px] xl:w-[420px] flex-shrink-0 flex-col justify-between bg-gray-900 lg:border-l border-white/10 p-5 sm:p-7 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${
-                                    mobileTab === 'info' ? 'flex flex-1 h-full' : 'hidden lg:flex lg:h-full'
-                                }`}>
+                                {/* Right Area: Sidebar for Info & Palette - Visible side-by-side on desktop */}
+                                <div className="hidden lg:flex lg:h-full w-[380px] xl:w-[420px] flex-shrink-0 flex-col justify-between bg-gray-900 border-l border-white/10 p-5 sm:p-7 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                                     <div>
                                         {/* Project Title & Subtitle */}
                                         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
