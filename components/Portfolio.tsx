@@ -42,9 +42,10 @@ const PortfolioBlock: React.FC<{
 interface PortfolioProps {
     onViewWebDesign?: () => void;
     onViewBranding?: () => void;
+    onViewSocialMedia?: () => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign, onViewBranding }) => {
+const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign, onViewBranding, onViewSocialMedia }) => {
     const handleNavigation = (category: string) => {
         if (category === "WhatsApp") {
             window.open("https://wa.me/5511997991151", "_blank");
@@ -52,6 +53,8 @@ const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign, onViewBranding }
             onViewWebDesign();
         } else if (category === "Branding" && onViewBranding) {
             onViewBranding();
+        } else if (category === "Social Media" && onViewSocialMedia) {
+            onViewSocialMedia();
         } else {
             document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }

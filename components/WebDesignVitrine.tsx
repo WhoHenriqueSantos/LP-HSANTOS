@@ -47,8 +47,12 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
         }
     ];
 
-    const handleWhatsappInquiry = (projectName: string) => {
-        const text = encodeURIComponent(`Olá! Vi o projeto do site da ${projectName} na sua vitrine de Web Design e gostaria de fazer um orçamento de um site semelhante.`);
+    const handleWhatsappInquiry = (projectName?: string) => {
+        let msg = "Olá! Gostaria de solicitar um orçamento para um projeto de Web Design.";
+        if (projectName && projectName !== "Geral") {
+            msg = `Olá! Vi o projeto do site da ${projectName} na sua vitrine de Web Design e gostaria de fazer um orçamento de um site semelhante.`;
+        }
+        const text = encodeURIComponent(msg);
         window.open(`https://wa.me/5511997991151?text=${text}`, "_blank");
     };
 
@@ -77,14 +81,17 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <span className="text-brand-orange font-bold uppercase tracking-[0.3em] text-xs mb-3 block">
-                            Vitrine de Projetos
+                        <span className="text-brand-gray font-bold uppercase tracking-[0.3em] text-[14px] mb-3 block">
+                            VITRINE DE PROJETOS
                         </span>
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-                            Nossas Criações de <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-500">Web Design</span>
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                            UI/UX & <br className="hidden sm:inline" />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-orange-400 to-amber-500">
+                                Web Design
+                            </span>
                         </h1>
                         <p className="text-brand-gray text-base sm:text-lg leading-relaxed">
-                            Interfaces feitas sob medida, desenhadas para converter. Um trabalho pensado detalhe por detalhe para destacar os seus pontos fortes e consolidar a sua presença no digital.
+                            Desenvolvemos plataformas e interfaces de alta conversão, projetadas para acelerar vendas e consolidar a presença digital da sua empresa.
                         </p>
                     </motion.div>
                 </div>
@@ -198,41 +205,36 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
                     ))}
                 </div>
 
-                {/* Call To Action Box */}
+                {/* Bottom CTA Banner */}
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-28 p-8 sm:p-12 md:p-16 rounded-[2.5rem] bg-gradient-to-br from-gray-900 via-brand-dark to-gray-900 border border-gray-800 relative overflow-hidden text-center"
+                    className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-black border border-white/10 relative overflow-hidden"
                 >
-                    {/* Background glow effects */}
-                    <div className="absolute top-0 right-0 w-80 h-80 bg-brand-orange/5 rounded-full blur-[100px] pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-orange-600/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-                    <div className="max-w-2xl mx-auto space-y-6 relative z-10">
-                        <span className="text-brand-orange text-xs font-extrabold tracking-[0.3em] uppercase">
-                            Impulsione o seu negócio
-                        </span>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
-                            Quer uma Vitrine Digital para a sua Marca?
-                        </h2>
-                        <p className="text-brand-gray text-sm sm:text-base leading-relaxed">
-                            Experiências feitas sob medida, desenhadas para gerar resultados reais. O ponto de partida para construirmos o seu novo site juntos.
-                        </p>
-                        <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                        <div className="max-w-2xl">
+                            <span className="text-brand-orange font-bold uppercase tracking-[0.25em] text-xs mb-2 block">
+                                PRESENÇA DIGITAL & CONVERSÃO
+                            </span>
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight mb-3">
+                                Transforme visitantes em clientes com um site de alto impacto.
+                            </h2>
+                            <p className="text-brand-gray text-sm sm:text-base leading-relaxed">
+                                Um site lento ou ultrapassado faz você perder vendas todos os dias. Desenvolvemos interfaces intuitivas, rápidas e estruturadas para converter o seu tráfego.
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center flex-shrink-0">
                             <button 
-                                onClick={() => handleWhatsappInquiry("Geral")}
-                                className="w-full sm:w-auto bg-brand-orange hover:bg-opacity-90 text-white font-extrabold px-8 py-4 rounded-xl shadow-lg shadow-brand-orange/10 flex items-center justify-center gap-2 text-base transition-all hover:scale-105 active:scale-95"
+                                onClick={() => handleWhatsappInquiry()}
+                                className="bg-brand-orange hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-xl shadow-xl shadow-brand-orange/20 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 text-base"
                             >
                                 <WhatsappIcon className="w-5 h-5" />
-                                Falar com Especialista
+                                <span>Solicitar Projeto de Web</span>
                             </button>
-                            <button 
-                                onClick={onBack}
-                                className="w-full sm:w-auto border border-gray-700 bg-gray-800/20 hover:bg-gray-800/60 text-brand-gray hover:text-white font-bold px-8 py-4 rounded-xl text-base transition-all"
-                            >
-                                Voltar para a Home
-                            </button>
+                            <span className="text-xs text-gray-400/80 font-medium mt-2.5 tracking-wide text-center">
+                                Resposta em até 24h • Sem compromisso
+                            </span>
                         </div>
                     </div>
                 </motion.div>

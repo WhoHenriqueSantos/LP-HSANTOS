@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronLeft, X, Eye, Layers } from 'lucide-react';
+import { ChevronLeft, X, Layers } from 'lucide-react';
 import { WhatsappIcon } from './icons';
 
 interface ColorDetail {
@@ -60,48 +60,19 @@ const brunaleProject: BrandingProject = {
 
 export const brandingProjects: BrandingProject[] = [
     brunaleProject,
-    ...Array.from({ length: 9 }, (_, i) => ({
+    ...Array.from({ length: 11 }, (_, i) => ({
         id: `branding-item-${i + 2}`,
         title: "Em breve",
         subtitle: "",
         category: "",
         description: "",
         imageUrl: "",
-        aspectRatioClass: "aspect-[16/9]",
+        aspectRatioClass: "aspect-square",
         tags: [],
         colors: ["#334155", "#475569", "#64748b"],
         isPlaceholder: true
     }))
 ];
-
-// Helper to define organic asymmetric spans across horizontal rows (masonry horizontal)
-const getHorizontalSpanClass = (index: number) => {
-    switch (index) {
-        case 0:
-            // Hero card (Brunalê) - Wide panoramic prominence (16:9 on mobile, expanded bento on desktop)
-            return "col-span-12 lg:col-span-8 aspect-[16/9] sm:aspect-auto min-h-[200px] sm:min-h-[440px]";
-        case 1:
-            // Companion card
-            return "col-span-12 lg:col-span-4 min-h-[160px] sm:min-h-[440px]";
-        case 2:
-        case 3:
-        case 4:
-            // Trio row with balanced rhythm
-            return "col-span-12 sm:col-span-6 lg:col-span-4 min-h-[160px] sm:min-h-[320px]";
-        case 5:
-            // Asymmetric pair - left medium
-            return "col-span-12 lg:col-span-5 min-h-[160px] sm:min-h-[340px]";
-        case 6:
-            // Asymmetric pair - right wide
-            return "col-span-12 lg:col-span-7 min-h-[160px] sm:min-h-[340px]";
-        case 7:
-        case 8:
-        case 9:
-        default:
-            // Trio row
-            return "col-span-12 sm:col-span-6 lg:col-span-4 min-h-[160px] sm:min-h-[320px]";
-    }
-};
 
 const categories = ["Todas", "Moda"];
 
@@ -135,12 +106,33 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
     const handleWhatsappInquiry = (project?: BrandingProject) => {
         const text = project 
             ? encodeURIComponent(`Olá Henrique! Vi o Brandkit da "${project.title}" no seu portfólio de Branding e gostaria de solicitar um orçamento para a identidade da minha marca.`)
-            : encodeURIComponent("Olá Henrique! Vi sua vitrine de Branding & Identidade Visual e gostaria de solicitar uma proposta para meu projeto.");
+            : encodeURIComponent("Olá Henrique! Vi sua vitrine de Branding & Identidade Visual e gostaria de iniciar um projeto de marca.");
         window.open(`https://wa.me/5511997991151?text=${text}`, "_blank");
     };
 
     return (
         <section className="bg-brand-dark text-white min-h-screen pt-28 pb-20 relative selection:bg-brand-orange selection:text-white">
+            {/* Scoped style for discreet scrollbar */}
+            <style>{`
+                .discreet-scroll {
+                    scrollbar-width: thin;
+                    scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
+                }
+                .discreet-scroll::-webkit-scrollbar {
+                    width: 6px;
+                    height: 6px;
+                    background: transparent;
+                }
+                .discreet-scroll::-webkit-scrollbar-thumb {
+                    background-color: rgba(100, 116, 139, 0.45);
+                    border-radius: 9999px;
+                    transition: background-color 0.2s ease;
+                }
+                .discreet-scroll::-webkit-scrollbar-thumb:hover {
+                    background-color: rgba(100, 116, 139, 0.75);
+                }
+            `}</style>
+
             {/* Background Ambient Glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-brand-orange/10 via-transparent to-transparent pointer-events-none blur-3xl" />
 
@@ -167,21 +159,21 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <span className="text-brand-orange font-bold uppercase tracking-[0.3em] text-xs mb-3 block">
+                        <span className="text-brand-gray font-bold uppercase tracking-[0.3em] text-[14px] mb-3 block">
                             VITRINE DE PROJETOS
                         </span>
                         
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-                            Design de Marcas & <br className="hidden sm:inline" />
+                            Design de Marca & <br className="hidden sm:inline" />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange via-orange-400 to-amber-500">
                                 Identidade Visual
                             </span>
                         </h1>
                         
                         <p className="text-brand-gray text-base sm:text-lg leading-relaxed max-w-2xl">
-                            Transformamos ideias e valores em identidades inesquecíveis.
-                            <br />
-                            Navegue pelo nosso mural de projetos para explorar logotipos, sistemas visuais, manuais e embalagens.
+                            Construímos sistemas visuais estratégicos para posicionar marcas e valorizar negócios no mercado.
+                            <br className="hidden sm:inline" />{" "}
+                            Explore nossa seleção de cases para conhecer a arquitetura visual, embalagens e identidades que desenvolvemos.
                         </p>
                     </motion.div>
                 </div>
@@ -213,87 +205,72 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                     </div>
                 </motion.div>
 
-                {/* Organic Horizontal Masonry / Asymmetric Bento Gallery */}
-                <div className="grid grid-cols-12 gap-5 sm:gap-6 lg:gap-7 items-stretch">
+                {/* Uniform 4-Column (4x3) Square Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 items-stretch">
                     {filteredProjects.map((project, idx) => {
                         const isInteractive = !project.isPlaceholder;
-                        const spanClass = getHorizontalSpanClass(idx);
 
                         return (
                             <motion.div
                                 key={project.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.45, delay: idx * 0.05 }}
-                                className={`flex flex-col ${spanClass}`}
+                                transition={{ duration: 0.45, delay: idx * 0.04 }}
+                                className="w-full flex flex-col"
                             >
                                 <div
                                     onClick={() => isInteractive && handleOpenProject(project)}
-                                    className={`group relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 flex flex-col justify-between p-3.5 sm:p-7 ${
+                                    className={`group relative w-full aspect-square rounded-xl overflow-hidden transition-all duration-500 flex flex-col justify-between p-4 sm:p-5 ${
                                         isInteractive
-                                            ? "bg-gradient-to-b from-gray-900 to-gray-950 border border-white/10 hover:border-brand-orange/60 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-brand-orange/20"
+                                            ? "border border-white/10 hover:border-brand-orange/60 cursor-pointer shadow-xl hover:shadow-2xl hover:shadow-brand-orange/20"
                                             : "bg-gradient-to-br from-gray-900/60 via-gray-950/80 to-black/90 border border-white/10 cursor-default shadow-md"
                                     }`}
                                     style={isInteractive && project.colors?.[0] ? { backgroundColor: project.colors[0] } : undefined}
                                 >
                                     {isInteractive ? (
                                         <>
-                                            {/* Unified Artwork Canvas as Background with softer gradient */}
-                                            <div className="absolute inset-0 overflow-hidden">
+                                            {/* Unified Artwork Canvas as Background with centered height fit */}
+                                            <div className="absolute inset-0 overflow-hidden flex items-center justify-center">
                                                 <img 
                                                     src={project.imageUrl} 
                                                     alt={project.title}
-                                                    className="w-full h-full object-cover object-center transform group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                                                    className="w-full h-full object-contain object-center transform group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                                                     loading="lazy"
                                                 />
-                                                {/* Gentle top vignette for badges */}
-                                                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent opacity-75 pointer-events-none" />
-                                                
-                                                {/* Soft, low bottom vignette so the center artwork remains crisp and visible */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 via-30% to-transparent pointer-events-none" />
-                                                
-                                                {/* Subtle hover effect */}
-                                                <div className="absolute inset-0 bg-black/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
-                                                    <div className="w-14 h-14 rounded-full bg-brand-orange text-white flex items-center justify-center shadow-2xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                                                        <Eye className="w-6 h-6" />
-                                                    </div>
-                                                </div>
+                                                {/* Darkening gradient over cover - only appears on mouse hover */}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 via-45% to-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                                             </div>
 
-                                            {/* Top Row: Category & Slide Badges */}
-                                            <div className="relative z-10 flex items-center justify-between gap-2 pointer-events-none">
-                                                <span className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md text-brand-orange border border-white/15 shadow-sm">
+                                            {/* Top Row: Category Badge - only appears on hover */}
+                                            <div className="relative z-10 flex items-center justify-start pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-y-1 group-hover:translate-y-0">
+                                                <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md text-brand-orange border border-white/15 shadow-sm">
                                                     {project.category}
                                                 </span>
-                                                <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide uppercase bg-black/60 text-white/90 border border-white/15 backdrop-blur-md shadow-sm">
-                                                    <Layers className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-brand-orange" />
-                                                    8 Pranchas
-                                                </span>
                                             </div>
 
-                                            {/* Bottom: Title & Subtitle at bottom-left, Palette at bottom-right */}
-                                            <div className="relative z-10 mt-auto pt-2 sm:pt-16 flex flex-row items-end justify-between gap-2 sm:gap-4 pointer-events-none">
+                                            {/* Bottom: Title & Subtitle at bottom-left, Palette at bottom-right - only appears on hover */}
+                                            <div className="relative z-10 mt-auto pt-2 flex flex-row items-end justify-between gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
                                                 {/* Left: Project Title & Subtitle positioned low */}
-                                                <div className="min-w-0">
-                                                    <h3 className="text-lg sm:text-2xl lg:text-3xl font-extrabold text-white group-hover:text-brand-orange transition-colors tracking-tight drop-shadow-md truncate">
+                                                <div className="min-w-0 pr-1">
+                                                    <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-white group-hover:text-brand-orange transition-colors tracking-tight drop-shadow-md truncate">
                                                         {project.title}
                                                     </h3>
-                                                    <p className="text-[11px] sm:text-sm lg:text-base text-gray-200 font-medium mt-0.5 drop-shadow-sm truncate">
+                                                    <p className="text-[11px] sm:text-xs text-gray-200 font-medium mt-0.5 drop-shadow-sm truncate">
                                                         {project.subtitle}
                                                     </p>
                                                 </div>
 
                                                 {/* Right: Palette with label to the left and color circles */}
                                                 {project.colors && project.colors.length > 0 && (
-                                                    <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 pb-0.5">
-                                                        <span className="text-[10px] sm:text-xs lg:text-sm text-gray-300 font-medium drop-shadow-sm">
+                                                    <div className="flex items-center gap-1.5 shrink-0 pb-0.5">
+                                                        <span className="text-[10px] sm:text-xs text-gray-300 font-medium drop-shadow-sm">
                                                             Paleta
                                                         </span>
-                                                        <div className="flex items-center gap-1 sm:gap-2">
+                                                        <div className="flex items-center gap-1">
                                                             {project.colors.map((color, i) => (
                                                                 <span 
                                                                     key={i} 
-                                                                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5 rounded-full border border-black/50 shadow-md transform hover:scale-110 transition-transform"
+                                                                    className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border border-black/40 shadow-sm transform hover:scale-110 transition-transform"
                                                                     style={{ backgroundColor: color }}
                                                                     title={project.colorDetails?.[i]?.name ? `${project.colorDetails[i].name} (${color})` : color}
                                                                 />
@@ -309,29 +286,26 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                                             <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" />
 
                                             <div className="relative z-10 flex items-center justify-between opacity-40">
-                                                <span className="w-14 h-4 rounded-full bg-white/10" />
-                                                <span className="w-10 h-4 rounded-full bg-white/10" />
+                                                <span className="w-12 h-3.5 rounded-full bg-white/10" />
+                                                <span className="w-8 h-3.5 rounded-full bg-white/10" />
                                             </div>
 
-                                            <div className="relative z-10 my-auto py-6 flex flex-col items-center justify-center text-center">
-                                                <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-600 mb-3">
+                                            <div className="relative z-10 my-auto py-2 flex flex-col items-center justify-center text-center">
+                                                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-600 mb-2.5">
                                                     <Layers className="w-5 h-5 opacity-40" />
                                                 </div>
-                                                <h3 className="text-lg font-bold text-gray-400">
+                                                <h3 className="text-base font-bold text-gray-400">
                                                     {project.title}
                                                 </h3>
-                                                <span className="text-xs text-gray-600 mt-1">
-                                                    Projeto em desenvolvimento
-                                                </span>
                                             </div>
 
                                             <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/5">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-3 h-3 rounded-full bg-white/10 border border-white/20" />
-                                                    <span className="w-3 h-3 rounded-full bg-white/10 border border-white/20" />
-                                                    <span className="w-3 h-3 rounded-full bg-white/10 border border-white/20" />
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="w-2.5 h-2.5 rounded-full bg-white/10 border border-white/20" />
+                                                    <span className="w-2.5 h-2.5 rounded-full bg-white/10 border border-white/20" />
+                                                    <span className="w-2.5 h-2.5 rounded-full bg-white/10 border border-white/20" />
                                                 </div>
-                                                <span className="text-xs text-gray-600 font-medium">
+                                                <span className="text-[11px] text-gray-600 font-medium">
                                                     Aguardando lançamento
                                                 </span>
                                             </div>
@@ -350,26 +324,30 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                     viewport={{ once: true }}
                     className="mt-20 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-gray-900 via-gray-900 to-black border border-white/10 relative overflow-hidden"
                 >
-                    <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-orange/15 rounded-full blur-3xl pointer-events-none" />
                     <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
                         <div className="max-w-2xl">
                             <span className="text-brand-orange font-bold uppercase tracking-[0.25em] text-xs mb-2 block">
-                                Posicionamento de Marca
+                                DESIGN DE MARCA & POSICIONAMENTO
                             </span>
                             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight mb-3">
-                                Quer uma identidade visual marcante para o seu negócio?
+                                Sua marca transmite o valor real do seu trabalho?
                             </h2>
                             <p className="text-brand-gray text-sm sm:text-base leading-relaxed">
-                                Conte conosco para construir o design que vai diferenciar sua empresa no mercado e conquistar a preferência dos seus clientes.
+                                Evite perder clientes para concorrentes com marcas piores, mas melhor apresentadas. Vamos construir uma identidade visual memorável e posicionada para o seu mercado.
                             </p>
                         </div>
-                        <button 
-                            onClick={() => handleWhatsappInquiry()}
-                            className="bg-brand-orange hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-xl shadow-xl shadow-brand-orange/20 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 text-base flex-shrink-0"
-                        >
-                            <WhatsappIcon className="w-5 h-5" />
-                            <span>Solicitar Identidade Visual</span>
-                        </button>
+                        <div className="flex flex-col items-center flex-shrink-0">
+                            <button 
+                                onClick={() => handleWhatsappInquiry()}
+                                className="bg-brand-orange hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-xl shadow-xl shadow-brand-orange/20 transition-all transform hover:scale-105 active:scale-95 flex items-center gap-3 text-base"
+                            >
+                                <WhatsappIcon className="w-5 h-5" />
+                                <span>Iniciar Projeto de Marca</span>
+                            </button>
+                            <span className="text-xs text-gray-400/80 font-medium mt-2.5 tracking-wide text-center">
+                                Resposta em até 24h • Sem compromisso
+                            </span>
+                        </div>
                     </div>
                 </motion.div>
             </div>
@@ -395,26 +373,6 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                             transition={{ duration: 0.25 }}
                             className="relative w-full max-w-7xl h-[94vh] sm:h-[92vh] max-h-[96vh] bg-gray-950 border border-white/15 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl z-10 flex flex-col"
                         >
-                            {/* Scoped style for discreet scrollbar visible at all times in content feed */}
-                            <style>{`
-                                .discreet-scroll {
-                                    scrollbar-width: thin;
-                                    scrollbar-color: rgba(100, 116, 139, 0.45) transparent;
-                                }
-                                .discreet-scroll::-webkit-scrollbar {
-                                    width: 6px;
-                                    height: 6px;
-                                    background: transparent;
-                                }
-                                .discreet-scroll::-webkit-scrollbar-thumb {
-                                    background-color: rgba(100, 116, 139, 0.45);
-                                    border-radius: 9999px;
-                                    transition: background-color 0.2s ease;
-                                }
-                                .discreet-scroll::-webkit-scrollbar-thumb:hover {
-                                    background-color: rgba(100, 116, 139, 0.75);
-                                }
-                            `}</style>
 
                             {/* Top Bar: Brand Dark Blue #1e2a38 spanning the full modal header */}
                             <div className="bg-[#1e2a38] px-4 sm:px-7 py-3 sm:py-4 border-b border-white/10 flex items-center justify-between shrink-0 z-20 w-full gap-2">

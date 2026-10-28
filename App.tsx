@@ -9,12 +9,13 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WebDesignVitrine from './components/WebDesignVitrine';
 import BrandingVitrine from './components/BrandingVitrine';
+import SocialMediaVitrine from './components/SocialMediaVitrine';
 import { HIcon } from './components/icons';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'webdesign' | 'branding'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'webdesign' | 'branding' | 'socialmedia'>('home');
 
-  const handleSetView = (view: 'home' | 'webdesign' | 'branding') => {
+  const handleSetView = (view: 'home' | 'webdesign' | 'branding' | 'socialmedia') => {
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
@@ -32,6 +33,7 @@ const App: React.FC = () => {
             <Portfolio 
               onViewWebDesign={() => handleSetView('webdesign')} 
               onViewBranding={() => handleSetView('branding')}
+              onViewSocialMedia={() => handleSetView('socialmedia')}
             />
           </div>
           <Testimonials />
@@ -48,6 +50,12 @@ const App: React.FC = () => {
       {currentView === 'branding' && (
         <main className="flex-grow">
           <BrandingVitrine onBack={() => handleSetView('home')} />
+        </main>
+      )}
+
+      {currentView === 'socialmedia' && (
+        <main className="flex-grow">
+          <SocialMediaVitrine onBack={() => handleSetView('home')} />
         </main>
       )}
       

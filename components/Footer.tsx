@@ -2,7 +2,7 @@ import React from 'react';
 import { InstagramIcon, WhatsappIcon, MailIcon, HsantosFullLogo } from './icons';
 
 interface FooterProps {
-    onViewChange?: (view: 'home' | 'webdesign' | 'branding') => void;
+    onViewChange?: (view: 'home' | 'webdesign' | 'branding' | 'socialmedia') => void;
 }
 
 const Footer: React.FC<FooterProps> = ({ onViewChange }) => {

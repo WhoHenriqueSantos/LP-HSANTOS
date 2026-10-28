@@ -24,8 +24,8 @@ const HamburgerIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
 );
 
 interface HeaderProps {
-    currentView?: 'home' | 'webdesign' | 'branding';
-    onViewChange?: (view: 'home' | 'webdesign' | 'branding') => void;
+    currentView?: 'home' | 'webdesign' | 'branding' | 'socialmedia';
+    onViewChange?: (view: 'home' | 'webdesign' | 'branding' | 'socialmedia') => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) => {
