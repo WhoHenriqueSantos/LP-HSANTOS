@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { InstagramIcon, WhatsappIcon, MailIcon, HsantosFullLogo } from './icons';
 
 interface FooterProps {
@@ -6,6 +7,8 @@ interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
+    const navigate = useNavigate();
+
     return (
         <footer className="bg-black/50">
             <div className="container mx-auto px-6 py-8">
@@ -13,13 +16,10 @@ const Footer: React.FC<FooterProps> = ({ onViewChange }) => {
                     <a 
                         href="#hero" 
                         onClick={(e) => {
-                            if (onViewChange) {
-                                e.preventDefault();
-                                onViewChange('home');
-                                setTimeout(() => {
-                                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                                }, 100);
-                            }
+                            e.preventDefault();
+                            navigate('/');
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            if (onViewChange) onViewChange('home');
                         }}
                         aria-label="HSANTOS DESIGN Logo" 
                         className="flex items-center gap-3 transition-transform hover:scale-105"

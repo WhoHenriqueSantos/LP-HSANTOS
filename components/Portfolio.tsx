@@ -41,6 +41,8 @@ const PortfolioBlock: React.FC<{
     </button>
 );
 
+import { useNavigate } from 'react-router-dom';
+
 interface PortfolioProps {
     onViewWebDesign?: () => void;
     onViewBranding?: () => void;
@@ -48,15 +50,20 @@ interface PortfolioProps {
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({ onViewWebDesign, onViewBranding, onViewSocialMedia }) => {
+    const navigate = useNavigate();
+
     const handleNavigation = (category: string) => {
         if (category === "WhatsApp") {
             window.open("https://wa.me/5511997991151", "_blank");
-        } else if (category === "Web Design" && onViewWebDesign) {
-            onViewWebDesign();
-        } else if (category === "Branding" && onViewBranding) {
-            onViewBranding();
-        } else if (category === "Social Media" && onViewSocialMedia) {
-            onViewSocialMedia();
+        } else if (category === "Web Design") {
+            if (onViewWebDesign) onViewWebDesign();
+            else navigate('/web');
+        } else if (category === "Branding") {
+            if (onViewBranding) onViewBranding();
+            else navigate('/branding');
+        } else if (category === "Social Media") {
+            if (onViewSocialMedia) onViewSocialMedia();
+            else navigate('/graphic');
         } else {
             document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         }

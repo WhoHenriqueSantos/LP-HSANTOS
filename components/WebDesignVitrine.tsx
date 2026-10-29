@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ChevronLeft, ExternalLink, Globe, Monitor, Shield, Sparkles, Zap, Code } from 'lucide-react';
 import { WhatsappIcon } from './icons';
@@ -8,6 +9,8 @@ interface WebDesignVitrineProps {
 }
 
 const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
+    const { cliente } = useParams<{ cliente?: string }>();
+    const navigate = useNavigate();
     const projects = [
         {
             title: "Veritas Contabilidade",
@@ -56,6 +59,18 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
         window.open(`https://wa.me/5511997991151?text=${text}`, "_blank");
     };
 
+    const formattedClientName = cliente
+        ? cliente.split(/[-_]/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
+        : null;
+
+    useEffect(() => {
+        if (formattedClientName) {
+            document.title = `${formattedClientName} — UI/UX & Web Design | HSantos Design`;
+        } else {
+            document.title = "HSantos Design | UI/UX & Web Design";
+        }
+    }, [formattedClientName]);
+
     return (
         <section className="bg-brand-dark text-white min-h-screen pt-28 pb-20">
             <div className="container mx-auto px-6 max-w-7xl">
@@ -66,7 +81,10 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
                     className="mb-8"
                 >
                     <button 
-                        onClick={onBack}
+                        onClick={() => {
+                            if (onBack) onBack();
+                            else navigate('/');
+                        }}
                         className="flex items-center gap-2 text-brand-gray hover:text-brand-orange transition-colors font-medium text-sm group"
                     >
                         <ChevronLeft className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" />
@@ -81,6 +99,12 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
+                        {formattedClientName && (
+                            <div className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-orange/15 border border-brand-orange/30 text-brand-orange text-xs sm:text-sm font-semibold">
+                                <Sparkles className="w-4 h-4" />
+                                <span>Apresentação exclusiva para <strong>{formattedClientName}</strong></span>
+                            </div>
+                        )}
                         <span className="text-brand-gray font-bold uppercase tracking-[0.3em] text-[14px] mb-3 block">
                             VITRINE DE PROJETOS
                         </span>

@@ -23,18 +23,24 @@ const HamburgerIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
     </div>
 );
 
+import { useNavigate, useLocation } from 'react-router-dom';
+
 interface HeaderProps {
     currentView?: 'home' | 'webdesign' | 'branding' | 'socialmedia';
     onViewChange?: (view: 'home' | 'webdesign' | 'branding' | 'socialmedia') => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) => {
+const Header: React.FC<HeaderProps> = ({ currentView, onViewChange }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('hero');
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const isHome = location.pathname === '/';
 
     useEffect(() => {
-        if (currentView !== 'home') {
+        if (!isHome) {
             setActiveSection('portfolio');
             return;
         }
@@ -61,31 +67,22 @@ const Header: React.FC<HeaderProps> = ({ currentView = 'home', onViewChange }) =
             }
         };
         window.addEventListener('scroll', handleScroll);
+        handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [currentView]);
+    }, [isHome, location.pathname]);
 
     const scrollToSection = (id: string) => {
         setIsMenuOpen(false);
 
-        if (currentView !== 'home') {
+        if (!isHome) {
+            if (id === 'hero') {
+                navigate('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                navigate(`/#${id}`);
+            }
             if (onViewChange) {
                 onViewChange('home');
-                setTimeout(() => {
-                    if (id === 'hero') {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        return;
-                    }
-                    const element = document.getElementById(id);
-                    if (element) {
-                        const headerHeight = 90;
-                        const elementPosition = element.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.scrollY - headerHeight;
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 100);
             }
             return;
         }

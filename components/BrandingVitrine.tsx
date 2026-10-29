@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, X, Layers } from 'lucide-react';
 import { WhatsappIcon } from './icons';
@@ -194,8 +195,72 @@ const LazySlideImage: React.FC<{
 };
 
 const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
+    const { cliente } = useParams<{ cliente?: string }>();
+    const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState("Todas");
     const [selectedProject, setSelectedProject] = useState<BrandingProject | null>(null);
+
+    // Normalize slug helper for robust matching
+    const normalizeSlug = (str: string) => 
+        str.toLowerCase()
+           .normalize('NFD')
+           .replace(/[\u0300-\u036f]/g, '')
+           .replace(/[^a-z0-9]/g, '');
+
+    // Synchronize selectedProject with URL :cliente parameter
+    useEffect(() => {
+        if (!cliente) {
+            setSelectedProject(null);
+            document.title = "HSantos Design | Branding & Identidade Visual";
+            return;
+        }
+
+        const cleanParam = normalizeSlug(cliente);
+        const found = brandingProjects.find(p => {
+            if (p.isPlaceholder) return false;
+            const cleanId = normalizeSlug(p.id);
+            const cleanTitle = normalizeSlug(p.title);
+            return cleanId === cleanParam || cleanTitle === cleanParam;
+        });
+
+        if (found) {
+            setSelectedProject(found);
+            document.title = `${found.title} — Identidade Visual & Brandkit | HSantos Design`;
+        } else {
+            // Dynamic client presentation fallback for client-specific pitch links
+            const formattedName = cliente
+                .split(/[-_]/)
+                .filter(Boolean)
+                .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+                .join(' ');
+
+            const dynamicClient: BrandingProject = {
+                id: cliente,
+                title: formattedName,
+                subtitle: "Identidade Visual & Brandkit",
+                category: "Apresentação Exclusiva",
+                description: `Apresentação de posicionamento e diretrizes de identidade visual preparada para ${formattedName}. Clique no botão abaixo para conversar diretamente com Henrique Santos e personalizar cada detalhe da sua marca.`,
+                imageUrl: "/branding/brunale/1.webp",
+                aspectRatioClass: "aspect-[16/9]",
+                tags: ["Exclusivo", "Identidade Visual", "Brandkit"],
+                colors: ["#F96932", "#1A202C", "#2A9D8F"],
+                colorDetails: [
+                    { name: "Laranja HSantos", hex: "#F96932", role: "Destaque" },
+                    { name: "Grafite Nobre", hex: "#1A202C", role: "Estrutural" },
+                    { name: "Verde Petróleo", hex: "#2A9D8F", role: "Secundária" }
+                ],
+                slides: [
+                    "/branding/brunale/1.webp",
+                    "/branding/optinuum/1.webp"
+                ],
+                isPlaceholder: false,
+                canvasBg: "#FFFFFF"
+            };
+
+            setSelectedProject(dynamicClient);
+            document.title = `${formattedName} — Brandkit Exclusivo | HSantos Design`;
+        }
+    }, [cliente]);
 
     const filteredProjects = selectedCategory === "Todas"
         ? brandingProjects
@@ -203,7 +268,12 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
 
     const handleOpenProject = (project: BrandingProject) => {
         if (project.isPlaceholder) return;
-        setSelectedProject(project);
+        navigate(`/branding/${project.id}`);
+    };
+
+    const handleCloseProject = () => {
+        setSelectedProject(null);
+        navigate('/branding');
     };
 
     // Close on Escape key
@@ -212,7 +282,7 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
-                setSelectedProject(null);
+                handleCloseProject();
             }
         };
 
@@ -479,7 +549,7 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            onClick={() => setSelectedProject(null)}
+                            onClick={handleCloseProject}
                             className="fixed inset-0 bg-black/90 backdrop-blur-md"
                         />
 
@@ -507,7 +577,7 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
 
                                     {/* Close button */}
                                     <button 
-                                        onClick={() => setSelectedProject(null)}
+                                        onClick={handleCloseProject}
                                         className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white flex items-center justify-center transition-all border border-white/10 shrink-0"
                                         aria-label="Fechar visualização"
                                     >

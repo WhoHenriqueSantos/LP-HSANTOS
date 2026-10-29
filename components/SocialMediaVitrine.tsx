@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, X, Layers, Sparkles } from 'lucide-react';
 import { WhatsappIcon } from './icons';
@@ -121,8 +122,22 @@ const LazySlideImage: React.FC<{
 };
 
 const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
+    const { cliente } = useParams<{ cliente?: string }>();
+    const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState("Todos");
     const [selectedProject, setSelectedProject] = useState<SocialMediaProject | null>(null);
+
+    const formattedClientName = cliente
+        ? cliente.split(/[-_]/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ')
+        : null;
+
+    useEffect(() => {
+        if (formattedClientName) {
+            document.title = `${formattedClientName} — Design Gráfico | HSantos Design`;
+        } else {
+            document.title = "HSantos Design | Design Gráfico & Conteúdo Estratégico";
+        }
+    }, [formattedClientName]);
 
     const filteredProjects = selectedCategory === "Todos"
         ? socialMediaProjects
@@ -150,6 +165,8 @@ const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
     const handleWhatsappInquiry = (project?: SocialMediaProject) => {
         const text = project 
             ? encodeURIComponent(`Olá Henrique! Vi o projeto "${project.title}" no seu portfólio e gostaria de solicitar um orçamento para materiais gráficos e editoriais da minha empresa.`)
+            : formattedClientName
+            ? encodeURIComponent(`Olá Henrique! Acessei a página exclusiva de Design Gráfico para ${formattedClientName} e gostaria de solicitar um orçamento para materiais gráficos da minha empresa.`)
             : encodeURIComponent("Olá Henrique! Gostaria de solicitar um orçamento para materiais gráficos, embalagens e design editorial para minha empresa.");
         window.open(`https://wa.me/5511997991151?text=${text}`, "_blank");
     };
@@ -188,7 +205,10 @@ const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
                     className="mb-8"
                 >
                     <button 
-                        onClick={onBack}
+                        onClick={() => {
+                            if (onBack) onBack();
+                            else navigate('/');
+                        }}
                         className="inline-flex items-center gap-2 text-brand-gray hover:text-brand-orange transition-colors font-medium text-sm group py-2"
                     >
                         <ChevronLeft className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" />
@@ -203,6 +223,12 @@ const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
+                        {formattedClientName && (
+                            <div className="mb-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-orange/15 border border-brand-orange/30 text-brand-orange text-xs sm:text-sm font-semibold">
+                                <Sparkles className="w-4 h-4" />
+                                <span>Apresentação exclusiva para <strong>{formattedClientName}</strong></span>
+                            </div>
+                        )}
                         <span className="text-brand-gray font-bold uppercase tracking-[0.3em] text-[14px] mb-3 block">
                             VITRINE DE PROJETOS
                         </span>
