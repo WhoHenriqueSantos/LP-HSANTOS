@@ -15,6 +15,8 @@ const PortfolioBlock: React.FC<{
         <img 
             src={imageUrl} 
             alt={title} 
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
         />
         

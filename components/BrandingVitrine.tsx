@@ -35,7 +35,7 @@ const brunaleProject: BrandingProject = {
     subtitle: "Semijóias e Acessórios",
     category: "Moda",
     description: "Identidade visual completa e refinada desenvolvida para a Brunalê Semijóias e Acessórios. Unindo uma tipografia serifada de alto contraste a traços finos e elegantes, o projeto alcança o equilíbrio perfeito entre o clássico e o contemporâneo. O logotipo conta com um detalhe fluido no \"e\" que remete ao caimento gracioso de uma corrente com pingente de coroa, complementado por uma paleta de tons nobres e acolhedores.",
-    imageUrl: "/branding/brunale/1.svg",
+    imageUrl: "/branding/brunale/1.webp",
     aspectRatioClass: "aspect-[16/9]",
     tags: ["Moda", "Semijóias", "Identidade Visual", "Brandkit"],
     colors: ["#273F24", "#F3E8CA", "#887862"],
@@ -45,23 +45,60 @@ const brunaleProject: BrandingProject = {
         { name: "Taupe", hex: "#887862", role: "Apoio" }
     ],
     slides: [
-        "/branding/brunale/1.svg",
-        "/branding/brunale/2.png",
-        "/branding/brunale/3.svg",
-        "/branding/brunale/4.png",
-        "/branding/brunale/5.svg",
-        "/branding/brunale/6.svg",
-        "/branding/brunale/7.svg",
-        "/branding/brunale/8.svg"
+        "/branding/brunale/1.webp",
+        "/branding/brunale/2.webp",
+        "/branding/brunale/3.webp",
+        "/branding/brunale/4.webp",
+        "/branding/brunale/5.webp",
+        "/branding/brunale/6.webp",
+        "/branding/brunale/7.webp",
+        "/branding/brunale/8.webp"
     ],
     isPlaceholder: false,
     canvasBg: "#FCFBF7"
 };
 
+const optinuumProject: BrandingProject = {
+    id: "optinuum",
+    title: "Optinuum",
+    subtitle: "Softwares",
+    category: "Tecnologia",
+    description: "Identidade visual moderna e estruturada, desenvolvida para traduzir a essência da Optinuum. O projeto aposta em uma geometria limpa e em hexágonos concêntricos que simbolizam crescimento e escalabilidade, complementados por uma paleta de tons sóbrios e tecnológicos",
+    imageUrl: "/branding/optinuum/1.webp",
+    aspectRatioClass: "aspect-[16/9]",
+    tags: ["Tecnologia", "Softwares", "Identidade Visual", "Brandkit"],
+    colors: ["#3D516B", "#E6E6E6", "#2A9D8F"],
+    colorDetails: [
+        { name: "Azul Ardósia", hex: "#3D516B", role: "Principal" },
+        { name: "Cinza Claro", hex: "#E6E6E6", role: "Secundária" },
+        { name: "Verde Petróleo", hex: "#2A9D8F", role: "Apoio" }
+    ],
+    slides: [
+        "/branding/optinuum/1.webp",
+        "/branding/optinuum/2.webp",
+        "/branding/optinuum/3.webp",
+        "/branding/optinuum/4.webp",
+        "/branding/optinuum/5.webp",
+        "/branding/optinuum/6.webp",
+        "/branding/optinuum/7.webp",
+        "/branding/optinuum/8.webp",
+        "/branding/optinuum/9.webp",
+        "/branding/optinuum/10.webp",
+        "/branding/optinuum/11.webp",
+        "/branding/optinuum/12.webp",
+        "/branding/optinuum/13.webp",
+        "/branding/optinuum/14.webp",
+        "/branding/optinuum/15.webp"
+    ],
+    isPlaceholder: false,
+    canvasBg: "#FFFFFF"
+};
+
 export const brandingProjects: BrandingProject[] = [
     brunaleProject,
-    ...Array.from({ length: 11 }, (_, i) => ({
-        id: `branding-item-${i + 2}`,
+    optinuumProject,
+    ...Array.from({ length: 10 }, (_, i) => ({
+        id: `branding-item-${i + 3}`,
         title: "Em breve",
         subtitle: "",
         category: "",
@@ -74,7 +111,87 @@ export const brandingProjects: BrandingProject[] = [
     }))
 ];
 
-const categories = ["Todas", "Moda"];
+const categories = ["Todas", "Moda", "Tecnologia"];
+
+const LazySlideImage: React.FC<{
+    src: string;
+    alt: string;
+    isPriority?: boolean;
+    canvasBg?: string;
+}> = ({ src, alt, isPriority = false, canvasBg = '#FCFBF7' }) => {
+    const [shouldLoad, setShouldLoad] = useState(isPriority);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isPriority) {
+            setShouldLoad(true);
+            return;
+        }
+
+        const el = containerRef.current;
+        if (!el) return;
+
+        // IntersectionObserver loads slide only when approaching viewport (within 400px margin)
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            {
+                rootMargin: '400px 0px 400px 0px',
+                threshold: 0.01
+            }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [isPriority]);
+
+    return (
+        <div 
+            ref={containerRef}
+            className="relative w-full overflow-hidden"
+            style={{ 
+                minHeight: isLoaded ? 'auto' : '260px'
+            }}
+        >
+            {/* Elegant Skeleton Placeholder */}
+            {!isLoaded && (
+                <div 
+                    className="w-full aspect-[16/10] sm:aspect-[16/9] flex flex-col items-center justify-center rounded-lg select-none"
+                    style={{ 
+                        backgroundColor: canvasBg === '#FFFFFF' ? '#f8fafc' : 'rgba(0, 0, 0, 0.04)' 
+                    }}
+                >
+                    <div className="flex flex-col items-center gap-2.5">
+                        <div className="w-6 h-6 border-2 border-brand-orange/30 border-t-brand-orange rounded-full animate-spin" />
+                        <span className="text-[11px] font-medium tracking-wide text-gray-400">
+                            Carregando slide...
+                        </span>
+                    </div>
+                </div>
+            )}
+
+            {shouldLoad && (
+                <img 
+                    src={src} 
+                    alt={alt}
+                    loading={isPriority ? "eager" : "lazy"}
+                    decoding="async"
+                    onLoad={() => setIsLoaded(true)}
+                    className={`w-full h-auto block select-none m-0 p-0 transition-opacity duration-500 ease-out ${
+                        isLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'
+                    }`}
+                />
+            )}
+        </div>
+    );
+};
 
 const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
     const [selectedCategory, setSelectedCategory] = useState("Todas");
@@ -236,6 +353,7 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                                                     alt={project.title}
                                                     className="w-full h-full object-contain object-center transform group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                                                     loading="lazy"
+                                                    decoding="async"
                                                 />
                                                 {/* Darkening gradient over cover - only appears on mouse hover */}
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 via-45% to-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -410,11 +528,11 @@ const BrandingVitrine: React.FC<BrandingVitrineProps> = ({ onBack }) => {
                                             key={sIdx}
                                             className={`w-full block p-0 m-0 ${sIdx < selectedProject.slides.length - 1 ? 'mb-[50px] sm:mb-[70px]' : 'mb-0'} leading-none bg-transparent`}
                                         >
-                                            <img 
-                                                src={slide} 
+                                            <LazySlideImage
+                                                src={slide}
                                                 alt={`${selectedProject.title} - ${sIdx + 1}`}
-                                                className="w-full h-auto block select-none m-0 p-0"
-                                                loading={sIdx < 2 ? "eager" : "lazy"}
+                                                isPriority={sIdx === 0}
+                                                canvasBg={selectedProject.canvasBg}
                                             />
                                         </div>
                                     ))}

@@ -135,6 +135,8 @@ const WebDesignVitrine: React.FC<WebDesignVitrineProps> = ({ onBack }) => {
                                         <img 
                                             src={proj.imageUrl} 
                                             alt={`Preview do site ${proj.title}`} 
+                                            loading="lazy"
+                                            decoding="async"
                                             className="w-full h-full object-cover object-top transition-all duration-[4s] ease-in-out hover:object-bottom cursor-pointer"
                                             referrerPolicy="no-referrer"
                                         />

@@ -45,6 +45,81 @@ export const socialMediaProjects: SocialMediaProject[] = Array.from({ length: 12
 
 const categories = ["Todos"];
 
+const LazySlideImage: React.FC<{
+    src: string;
+    alt: string;
+    isPriority?: boolean;
+    canvasBg?: string;
+}> = ({ src, alt, isPriority = false, canvasBg = '#1A202C' }) => {
+    const [shouldLoad, setShouldLoad] = useState(isPriority);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isPriority) {
+            setShouldLoad(true);
+            return;
+        }
+
+        const el = containerRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            {
+                rootMargin: '400px 0px 400px 0px',
+                threshold: 0.01
+            }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, [isPriority]);
+
+    return (
+        <div 
+            ref={containerRef}
+            className="relative w-full overflow-hidden"
+            style={{ 
+                minHeight: isLoaded ? 'auto' : '260px'
+            }}
+        >
+            {!isLoaded && (
+                <div 
+                    className="w-full aspect-square sm:aspect-[4/5] flex flex-col items-center justify-center rounded-lg select-none bg-white/5"
+                >
+                    <div className="flex flex-col items-center gap-2.5">
+                        <div className="w-6 h-6 border-2 border-brand-orange/30 border-t-brand-orange rounded-full animate-spin" />
+                        <span className="text-[11px] font-medium tracking-wide text-gray-400">
+                            Carregando imagem...
+                        </span>
+                    </div>
+                </div>
+            )}
+
+            {shouldLoad && (
+                <img 
+                    src={src} 
+                    alt={alt}
+                    loading={isPriority ? "eager" : "lazy"}
+                    decoding="async"
+                    onLoad={() => setIsLoaded(true)}
+                    className={`w-full h-auto block select-none m-0 p-0 transition-opacity duration-500 ease-out ${
+                        isLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'
+                    }`}
+                />
+            )}
+        </div>
+    );
+};
+
 const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
     const [selectedCategory, setSelectedCategory] = useState("Todos");
     const [selectedProject, setSelectedProject] = useState<SocialMediaProject | null>(null);
@@ -203,6 +278,7 @@ const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
                                                     alt={project.title}
                                                     className="w-full h-full object-contain object-center transform group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                                                     loading="lazy"
+                                                    decoding="async"
                                                 />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 via-45% to-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                                             </div>
@@ -335,7 +411,7 @@ const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
                             transition={{ duration: 0.3 }}
                             className="relative z-10 w-full max-w-6xl max-h-[92vh] sm:max-h-[90vh] bg-brand-dark/95 border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden"
                         >
-                            <div className="flex items-center justify-between px-5 sm:px-8 py-3.5 sm:py-4 border-b border-white/10 bg-brand-dark/95">
+                            <div className="flex items-center justify-between px-5 sm:px-8 py-3.5 sm:py-4 border-b border-white/10 bg-brand-dark/95 shrink-0 z-20">
                                 <div className="flex items-center gap-2.5 sm:gap-3">
                                     <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-brand-orange/20 text-brand-orange border border-brand-orange/30">
                                         {selectedProject.category}
@@ -350,6 +426,19 @@ const SocialMediaVitrine: React.FC<SocialMediaVitrineProps> = ({ onBack }) => {
                                 >
                                     <X className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </button>
+                            </div>
+
+                            {/* Slide Feed with on-demand lazy loading */}
+                            <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 sm:space-y-8 discreet-scroll">
+                                {selectedProject.slides.map((slide, sIdx) => (
+                                    <div key={sIdx} className="w-full max-w-4xl mx-auto">
+                                        <LazySlideImage
+                                            src={slide}
+                                            alt={`${selectedProject.title} - ${sIdx + 1}`}
+                                            isPriority={sIdx === 0}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </motion.div>
                     </div>
