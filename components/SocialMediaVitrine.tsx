@@ -74,7 +74,7 @@ const LazySlideImage: React.FC<{
                 });
             },
             {
-                rootMargin: '400px 0px 400px 0px',
+                rootMargin: '1000px 0px 1000px 0px',
                 threshold: 0.01
             }
         );

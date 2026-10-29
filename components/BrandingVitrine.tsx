@@ -132,7 +132,7 @@ const LazySlideImage: React.FC<{
         const el = containerRef.current;
         if (!el) return;
 
-        // IntersectionObserver loads slide only when approaching viewport (within 400px margin)
+        // IntersectionObserver loads slide well in advance (within 1000px margin)
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -143,7 +143,7 @@ const LazySlideImage: React.FC<{
                 });
             },
             {
-                rootMargin: '400px 0px 400px 0px',
+                rootMargin: '1000px 0px 1000px 0px',
                 threshold: 0.01
             }
         );
